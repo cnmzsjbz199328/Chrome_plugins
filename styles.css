@@ -1,0 +1,174 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 93vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 120px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    background-color: #f4f4f4;
+}
+
+.word-list {
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.word-item {
+    cursor: pointer;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.word-item:hover {
+    background-color: #f0f0f0;
+}
+
+.main-content {
+    flex: 1; 
+    margin-left: 140px;
+    overflow-y: auto;
+    width: 300px;
+}
+
+.search-bar {
+    display: flex;
+        gap: 10px;
+        position: fixed;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    border: none;
+    background-color: #a9afb6;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    width: min-content;
+    font-size: smaller;
+}
+
+option {
+    font-size: smaller;
+}
+
+#exportFormat{
+    font-size: smaller;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#result {
+    margin-top: 100px; /* Adjust based on the height of the fixed search bar */
+    text-align: left;
+}
+
+.phonetic, .meaning {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.audio {
+    margin-left: 10px;
+}
+
+.publisher {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.logo-and-name {
+    display: flex ;
+        flex-direction: column;
+        width: 100px;
+        gap: 3px;
+}
+
+.publisher-logo {
+    width: 100px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.publisher-name {
+    font-weight: bold;
+    margin-right: 10px;
+    color: dimgray;
+}
+
+.publisher-description {
+    margin-top: 5px;
+}
+
+audio {
+    width: 50%;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.import-export-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2px;
+    margin-top: 10px;
+    flex-direction: column;
+}
+
+.export-container {
+    display: flex;
+    gap: 2px;
+    flex-direction: row;
+}
+
+#default-message {
+    width: 100px;
+    height: 50px;
+    background: white;
+    font-variant: all-petite-caps;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.news {
+margin: 0;
+}
+
+.sentinel {
+    height: 1px;
+}
