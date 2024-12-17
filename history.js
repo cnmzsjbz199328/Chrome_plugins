@@ -1,6 +1,7 @@
 let words = [];
 let currentIndex = 0;
 const pageSize = 30;
+const MAX_WORDS = 1000; // 添加最大存储限制
 
 export async function loadWords() {
     return new Promise((resolve, reject) => {
@@ -28,24 +29,35 @@ export async function saveWords(newWords) {
 
 export async function checkAndAddWord(word, phonetic) {
     words = await loadWords();
+    // 如果超出限制，删除最早的记录
+    if (words.length >= MAX_WORDS) {
+        words = words.slice(-MAX_WORDS + 1);
+    }
     const existingWord = words.find(w => w.word === word);
     if (!existingWord) {
         words.push({ word, phonetic });
         words.sort((a, b) => a.word.localeCompare(b.word));
         await saveWords(words);
     }
-    displayWordList(words.slice(0, pageSize));
+    displayWordList(words.slice(0, currentIndex)); // 显示当前索引之前的所有单词
 }
 
 export function displayWordList(wordSubset) {
     const wordListDiv = document.getElementById('wordList');
+    if (!wordListDiv) {
+        console.error('wordList element not found');
+        return;
+    }
+    // 使用 DocumentFragment 优化 DOM 操作
+    const fragment = document.createDocumentFragment();
     wordSubset.forEach(entry => {
         const wordItem = document.createElement('div');
         wordItem.className = 'word-item';
         wordItem.textContent = entry.word;
         wordItem.dataset.word = entry.word; // Store the word in a data attribute
-        wordListDiv.appendChild(wordItem);
+        fragment.appendChild(wordItem);
     });
+    wordListDiv.appendChild(fragment);
 }
 
 export async function exportWords(format) {
