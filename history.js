@@ -1,14 +1,18 @@
+
+
 let words = [];
 let currentIndex = 0;
-const pageSize = 30;
+const pageSize = 20;
 const MAX_WORDS = 1000; // 添加最大存储限制
 
 export async function loadWords() {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get(['words'], (result) => {
             if (chrome.runtime.lastError) {
+                console.error('Error loading words:', chrome.runtime.lastError);
                 reject(chrome.runtime.lastError);
             } else {
+                console.log('Words loaded:', result.words);
                 resolve(result.words || []);
             }
         });
@@ -19,8 +23,10 @@ export async function saveWords(newWords) {
     return new Promise((resolve, reject) => {
         chrome.storage.local.set({ words: newWords }, () => {
             if (chrome.runtime.lastError) {
+                console.error('Error saving words:', chrome.runtime.lastError);
                 reject(chrome.runtime.lastError);
             } else {
+                console.log('Words saved successfully');
                 resolve();
             }
         });
@@ -28,18 +34,22 @@ export async function saveWords(newWords) {
 }
 
 export async function checkAndAddWord(word, phonetic) {
-    words = await loadWords();
-    // 如果超出限制，删除最早的记录
-    if (words.length >= MAX_WORDS) {
-        words = words.slice(-MAX_WORDS + 1);
+    try {
+        words = await loadWords();
+        // 如果超出限制，删除最早的记录
+        if (words.length >= MAX_WORDS) {
+            words = words.slice(-MAX_WORDS + 1);
+        }
+        const existingWord = words.find(w => w.word === word);
+        if (!existingWord) {
+            words.push({ word, phonetic });
+            words.sort((a, b) => a.word.localeCompare(b.word));
+            await saveWords(words);
+        }
+        displayWordList(words.slice(0, currentIndex)); // 显示当前索引之前的所有单词
+    } catch (error) {
+        console.error('Error in checkAndAddWord:', error);
     }
-    const existingWord = words.find(w => w.word === word);
-    if (!existingWord) {
-        words.push({ word, phonetic });
-        words.sort((a, b) => a.word.localeCompare(b.word));
-        await saveWords(words);
-    }
-    displayWordList(words.slice(0, currentIndex)); // 显示当前索引之前的所有单词
 }
 
 export function displayWordList(wordSubset) {
@@ -102,25 +112,41 @@ export async function importWords(file) {
     reader.readAsText(file);
 }
 
+export async function clearWords() {
+    try {
+        await saveWords([]);
+        words = [];
+        currentIndex = 0;
+        displayWordList(words);
+        console.log('Words cleared successfully');
+    } catch (error) {
+        console.error('Error clearing words:', error);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
-    words = await loadWords();
-    displayWordList(words.slice(0, pageSize));
-    currentIndex = pageSize;
+    try {
+        words = await loadWords();
+        displayWordList(words.slice(0, pageSize));
+        currentIndex = pageSize;
 
-    const observer = new IntersectionObserver(async (entries) => {
-        if (entries[0].isIntersecting) {
-            const nextWords = words.slice(currentIndex, currentIndex + pageSize);
-            displayWordList(nextWords);
-            currentIndex += pageSize;
-        }
-    }, {
-        root: document.querySelector('.word-list'),
-        rootMargin: '0px',
-        threshold: 1.0
-    });
+        const observer = new IntersectionObserver(async (entries) => {
+            if (entries[0].isIntersecting) {
+                const nextWords = words.slice(currentIndex, currentIndex + pageSize);
+                displayWordList(nextWords);
+                currentIndex += pageSize;
+            }
+        }, {
+            root: document.querySelector('.word-list'),
+            rootMargin: '0px',
+            threshold: 1.0
+        });
 
-    const sentinel = document.createElement('div');
-    sentinel.className = 'sentinel';
-    document.querySelector('.word-list').appendChild(sentinel);
-    observer.observe(sentinel);
+        const sentinel = document.createElement('div');
+        sentinel.className = 'sentinel';
+        document.querySelector('.word-list').appendChild(sentinel);
+        observer.observe(sentinel);
+    } catch (error) {
+        console.error('Error during DOMContentLoaded:', error);
+    }
 });
