@@ -1,0 +1,60 @@
+.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest"></script>
+</head>
+<body>
+    <h1>Test Supabase Database Operations</h1>
+
+    <button onclick="insertData()">Insert Data</button>
+    <button onclick="fetchData()">Fetch Data</button>
+
+    <div id="output"></div>
+
+        <script>
+        const supabaseUrl = 'https://jkzpczopfazbxrwesbop.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImprenBjem9wZmF6Ynhyd2VzYm9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ0NDgyMzcsImV4cCI6MjA1MDAyNDIzN30.BtyE2X00kt_bD2OKfgR9AeU3JxCP0U0cJk-hLZ54MEg';
+        
+        // 创建全局 supabase 客户端实例
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+    
+        // 定义全局函数
+        async function insertData() {
+            const { data, error } = await supabaseClient
+                .from('words')
+                .insert([
+                    { 
+                        word: 'example',
+                        phonetic: '/ɪɡˈzæmpəbr̩/'
+                    }
+                ]);
+    
+            if (error) {
+                console.error('Error inserting data:', error);
+                document.getElementById('output').innerText = 'Error: ' + error.message;
+            } else {
+                console.log('Data inserted:', data);
+                document.getElementById('output').innerText = 'Data inserted: ' + JSON.stringify(data);
+            }
+        }
+    
+        async function fetchData() {
+            const { data, error } = await supabaseClient
+                .from('words')
+                .select('word, phonetic');
+    
+            if (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('output').innerText = 'Error: ' + error.message;
+            } else {
+                console.log('Data fetched:', data);
+                document.getElementById('output').innerText = 'Data fetched: ' + JSON.stringify(data);
+            }
+        }
+    </script>
+</body>
+</html>
