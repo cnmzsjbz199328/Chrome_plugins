@@ -22,16 +22,15 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
-      "js": ["content.js"],
-      "type": "module"
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
     }
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "web_accessible_resources": [{
-    "resources": ["lib/*"],
+    "resources": ["lib/*", "script.js", "dictionary.js", "news.js", "history.js"],
     "matches": ["<all_urls>"]
   }]
 }

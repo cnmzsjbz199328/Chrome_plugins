@@ -7,21 +7,28 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  console.log("Context menu item clicked:", info.selectionText);
-  console.log("Tab info:", tab);
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === "lookupWord" && tab.id >= 0) {
-    console.log("Sending message to content script for tab:", tab.id);
-    chrome.tabs.sendMessage(tab.id, { type: "LOOKUP_WORD", text: info.selectionText }, (response) => {
-      if (chrome.runtime.lastError) {
-        console.error("Error sending message:", chrome.runtime.lastError);
-      } else if (response) {
-        console.log("Message sent successfully, response:", response);
-      } else {
-        console.log("Message sent successfully, but no response received");
-      }
-    });
-  } else {
-    console.error("Invalid tab ID or menu item not clicked:", tab);
+    try {
+      // 首先打开popup
+      await chrome.action.openPopup();
+      
+      // 等待一小段时间确保popup已经加载
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // 然后发送消息
+      chrome.runtime.sendMessage({
+        type: "WORD_LOOKUP",
+        text: info.selectionText
+      }, (response) => {
+        if (chrome.runtime.lastError) {
+          console.error("Error sending message to popup:", chrome.runtime.lastError);
+        } else {
+          console.log("Response from popup:", response);
+        }
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 });

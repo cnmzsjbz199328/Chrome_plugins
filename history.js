@@ -104,7 +104,7 @@ export function displayWordList(wordSubset) {
     wordSubset.forEach(entry => {
         const wordItem = document.createElement('div');
         wordItem.className = 'word-item';
-        wordItem.textContent = `${entry.word} ${entry.phonetic || ''}`;
+        wordItem.textContent = entry.word;
         wordItem.dataset.word = entry.word;
         fragment.appendChild(wordItem);
     });
