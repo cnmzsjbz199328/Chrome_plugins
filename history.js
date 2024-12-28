@@ -3,7 +3,7 @@
 
 let words = [];
 let currentIndex = 0;
-const pageSize = 20;
+const pageSize = 100;
 const MAX_WORDS = 1000;
 
 // Supabase setup

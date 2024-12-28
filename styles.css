@@ -7,6 +7,7 @@ body {
     height: 93vh;
     margin: 0;
     padding: 20px;
+    overflow-y: scroll;
 }
 
 .container {
@@ -48,6 +49,7 @@ body {
     margin-left: 140px;
     overflow-y: auto;
     width: 300px;
+    padding-right: 2px;
 }
 
 .search-bar {
@@ -171,4 +173,23 @@ margin: 0;
 
 .sentinel {
     height: 1px;
+}
+
+/* 自定义滚动条样式 */
+::-webkit-scrollbar {
+    width: 5px; /* 滚动条宽度 */
+}
+
+::-webkit-scrollbar-track {
+    background: #f4f4f4; /* 滚动条轨道背景色 */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #a9afb6; /* 滚动条颜色 */
+    border-radius: 10px; /* 滚动条圆角 */
+    border: 2px solid #f4f4f4; /* 滚动条边框 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #62a2e798; /* 滚动条悬停颜色 */
 }

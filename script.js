@@ -1,4 +1,4 @@
-import { loadWords, saveWords, checkAndAddWord, displayWordList, exportWords, importWords } from './history.js';
+import { loadWords, saveWords, checkAndAddWord, displayWordList, exportWords, importWords, clearWords } from './history.js';
 import { fetchWord } from './dictionary.js';
 import { fetchNews } from './news.js';
 
@@ -35,6 +35,12 @@ document.getElementById('importInput').addEventListener('change', async (event) 
   const file = event.target.files[0];
   if (file) {
     await importWords(file);
+  }
+});
+
+document.getElementById('clearButton').addEventListener('click', async () => {
+  if (confirm('Are you sure you want to delete all word records?')) {
+    await clearWords();
   }
 });
 
