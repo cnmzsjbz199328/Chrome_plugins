@@ -1,39 +1,68 @@
-# ChromeDictionary
+Modern Dictionary Chrome Extension
+Introduction
+Modern Dictionary is a Chrome extension that provides convenient ways to look up word definitions and related news. It offers both popup dictionary and right-click context menu lookup features, making it easy to find definitions without leaving your current page.
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+Features
+Multiple Lookup Methods
 
-#### 软件架构
-软件架构说明
+Search words directly in the popup interface
+Right-click on any word on a webpage to look it up instantly
+Comprehensive Word Information
 
+Detailed definitions from dictionary API
+Related news articles for broader context
+Phonetic pronunciations where available
+Word History Management
 
-#### 安装教程
+Save lookup history for quick access later
+Export history in JSON or HTML format
+Import previously exported word lists
+Clear all history with one click
+Modern User Interface
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+Clean, responsive design
+Custom styled scrollbars
+Easy navigation between word history and search results
+Installation
+Download or clone this repository
+Open Chrome and navigate to chrome://extensions/
+Enable "Developer mode" by toggling the switch in the top right corner
+Click "Load unpacked" and select the directory containing the extension files
+The Modern Dictionary extension should now appear in your extensions list and toolbar
+Usage
+Popup Dictionary
+Click the Modern Dictionary icon in the Chrome toolbar
+Enter a word in the search box and click "Search" or press Enter
+View the definition, pronunciation, and related news
+Context Menu Lookup
+Select a word on any webpage
+Right-click and select "Look up word" from the context menu
+The definition will appear in the extension popup
+Word History
+All looked up words are automatically saved to your history
+Click on any word in the history list to view its definition again
+Export your word history by selecting a format and clicking "Export"
+Import previously exported word lists by clicking "Import"
+Clear your entire word history by clicking "Clear All"
+Technical Architecture
+The extension is built using vanilla JavaScript with a modular architecture:
 
-#### 使用说明
+background.js: Handles context menu creation and background processes
+content.js: Communicates between webpages and the extension
+script.js: Main popup interface logic
+dictionary.js: Handles dictionary API requests and response formatting
+news.js: Fetches and displays related news articles
+history.js: Manages word history storage and retrieval
+API Integration
+The extension integrates with:
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+Dictionary API for word definitions
+News APIs for related articles
+Data Privacy
+The extension stores word history locally in your browser. No data is sent to external servers except for API requests to fetch definitions and news articles.
 
-#### 参与贡献
+Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
